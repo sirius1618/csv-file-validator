@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-public class Leitor_csv {
+public class LeitorCsv {
     public static final List<String> colunas = Arrays.asList(
             "NUMERO_DA_VENDA",
             "NOME_DO_CLIENTE",
