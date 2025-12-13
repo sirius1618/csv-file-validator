@@ -60,10 +60,9 @@ public class Leitor_csv {
                     return false;
                 }
 
-                int cont = linha.length() - linha.replace(",","").length();
-                if (cont != 3) {
-                    return false;
-                }
+                String[] campos = linha.split(",");
+                if (campos.length != colunas.size()) return false;
+
             }
         } catch (IOException e) {
             e.printStackTrace();
