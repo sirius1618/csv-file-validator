@@ -40,7 +40,7 @@ public class Leitor_csv {
             String linha = reader.readLine();
             String[] cabecalhoCsv = linha.split(",");
             for (int i = 0; i < colunas.size(); i++) {
-                if ((cabecalhoCsv[i].trim().equals(colunas.get(i)))) {
+                if (!(cabecalhoCsv[i].trim().equals(colunas.get(i)))) {
                     return false;
                 }
             }
