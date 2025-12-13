@@ -20,7 +20,7 @@ public class Leitor_csv {
         return new BufferedReader(new FileReader(caminhoArquivo));
     }
 
-    public Boolean validadorArquivoVazio (String caminhoArquivo) {
+    public boolean validadorArquivoVazio (String caminhoArquivo) {
         try{
             List<String> linhasArquivo = Files.readAllLines(Paths.get(caminhoArquivo));
             boolean vazio = linhasArquivo.stream().allMatch(l -> l.trim().isEmpty());
@@ -35,7 +35,7 @@ public class Leitor_csv {
         return true;
     }
 
-    public Boolean validadorColunas (String caminhoArquivo) {
+    public boolean validadorColunas (String caminhoArquivo) {
         try (BufferedReader reader = getBufferedReader(caminhoArquivo)) {
             String linha = reader.readLine();
             String[] cabecalhoCsv = linha.split(",");
@@ -52,7 +52,7 @@ public class Leitor_csv {
         return true;
     }
 
-    public Boolean validarLinhas (String caminhoArquivo) {
+    public boolean validarLinhas (String caminhoArquivo) {
         try (BufferedReader reader = getBufferedReader(caminhoArquivo)) {
             String linha = reader.readLine(); // pula a primeira linha pois já foi validada no metodo `validadorColunas`
             while((linha = reader.readLine()) != null) {
