@@ -24,15 +24,16 @@ public class Leitor_csv {
         try{
             List<String> linhasArquivo = Files.readAllLines(Paths.get(caminhoArquivo));
             boolean vazio = linhasArquivo.stream().allMatch(l -> l.trim().isEmpty());
-            if (vazio) {
+            if (!vazio) {
                 System.out.println("Arquivo " + caminhoArquivo + " vazio");
-                return false;
+                return true;
             }
         } catch (IOException e) {
             System.err.println("Erro ao ler o arquivo: " + caminhoArquivo);
             e.printStackTrace();
+            return false;
         }
-        return true;
+        return false;
     }
 
     public boolean validadorColunas (String caminhoArquivo) {
@@ -47,6 +48,7 @@ public class Leitor_csv {
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Erro ao ler arquivo:" + caminhoArquivo);
+            return false;
         }
 
         return true;
@@ -67,6 +69,7 @@ public class Leitor_csv {
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Erro ao ler arquivo:" + caminhoArquivo);
+            return false;
         }
         return true;
     }
