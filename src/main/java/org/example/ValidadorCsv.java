@@ -39,22 +39,6 @@ public class ValidadorCsv{
         return new BufferedReader(new FileReader(caminhoArquivo));
     }
 
-    public boolean validarArquivosVazios(String caminhoArquivo) {
-        try{
-            List<String> linhasArquivo = Files.readAllLines(Paths.get(caminhoArquivo));
-            boolean vazio = linhasArquivo.stream().allMatch(l -> l.trim().isEmpty());
-            if (vazio) {
-                System.out.println("Arquivo " + caminhoArquivo + " vazio");
-                return true;
-            }
-        } catch (IOException e) {
-            System.err.println("Erro ao ler o arquivo: " + caminhoArquivo);
-            e.printStackTrace();
-            return false;
-        }
-        return false;
-    }
-
     public boolean validarColunas (String caminhoArquivo) {
         try (BufferedReader reader = getBufferedReader(caminhoArquivo)) {
 
