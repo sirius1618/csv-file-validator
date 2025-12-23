@@ -10,12 +10,18 @@ import java.util.List;
 
 public class ValidadorCsv{
 
-    public String getCaminhoArquivo() {
-        return caminhoArquivo;
-    }
 
-    public ValidadorCsv(String caminhoArquivo) {
+    public ValidadorCsv(String caminhoArquivo) throws IOException {
         this.caminhoArquivo = caminhoArquivo;
+
+        boolean colunasValidas = validarColunas(caminhoArquivo);
+        boolean linhasValidadas = validarLinhas(caminhoArquivo);
+
+        if (!colunasValidas || !linhasValidadas) {
+            moverArquivo.moverArquivoInvalido(caminhoArquivo);
+        } else {
+            moverArquivo.moverArquivoValido(caminhoArquivo);
+        }
     }
 
     public static final List<String> colunas = Arrays.asList(
@@ -24,6 +30,7 @@ public class ValidadorCsv{
             "DATA_DA_VENDA",
             "VALOR_DA_VENDA"
     );
+
     public String caminhoArquivo;
 
     public MovedorDeArquivos moverArquivo = new MovedorDeArquivos();
