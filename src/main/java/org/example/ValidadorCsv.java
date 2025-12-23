@@ -8,29 +8,35 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-public class LeitorCsv {
+public class ValidadorCsv{
+
+    public String getCaminhoArquivo() {
+        return caminhoArquivo;
+    }
+
+    public ValidadorCsv(String caminhoArquivo) {
+        this.caminhoArquivo = caminhoArquivo;
+    }
+
     public static final List<String> colunas = Arrays.asList(
             "NUMERO_DA_VENDA",
             "NOME_DO_CLIENTE",
             "DATA_DA_VENDA",
             "VALOR_DA_VENDA"
     );
-    public MovedorDeArquivos moverArquivo = new MovedorDeArquivos();
     public String caminhoArquivo;
 
-    public LeitorCsv(String caminhoArquivo) {
-        this.caminhoArquivo = caminhoArquivo;
-    }
+    public MovedorDeArquivos moverArquivo = new MovedorDeArquivos();
 
     public BufferedReader getBufferedReader(String caminhoArquivo) throws  IOException{
         return new BufferedReader(new FileReader(caminhoArquivo));
     }
 
-    public boolean isValidadorArquivoVazio (String caminhoArquivo) {
+    public boolean validarArquivosVazios(String caminhoArquivo) {
         try{
             List<String> linhasArquivo = Files.readAllLines(Paths.get(caminhoArquivo));
             boolean vazio = linhasArquivo.stream().allMatch(l -> l.trim().isEmpty());
-            if (!vazio) {
+            if (vazio) {
                 System.out.println("Arquivo " + caminhoArquivo + " vazio");
                 return true;
             }
@@ -42,10 +48,24 @@ public class LeitorCsv {
         return false;
     }
 
-    public boolean isValidadorColunas (String caminhoArquivo) {
+    public boolean validarColunas (String caminhoArquivo) {
         try (BufferedReader reader = getBufferedReader(caminhoArquivo)) {
+
+
             String linha = reader.readLine();
+
+            if (linha == null || linha.trim().isEmpty()) {
+                System.out.println("Arquivo vazio");
+                return false;
+            }
+
             String[] cabecalhoCsv = linha.split(",");
+
+            if (cabecalhoCsv.length != colunas.size()) {
+                System.out.println("Quantidade de colunas menor do que o esperado");
+                return false;
+            }
+
             for (int i = 0; i < colunas.size(); i++) {
                 if (!(cabecalhoCsv[i].trim().equals(colunas.get(i)))) {
                     return false;
@@ -60,7 +80,7 @@ public class LeitorCsv {
         return true;
     }
 
-    public boolean isValidarLinhas (String caminhoArquivo) {
+    public boolean validarLinhas (String caminhoArquivo) {
         try (BufferedReader reader = getBufferedReader(caminhoArquivo)) {
             String linha = reader.readLine(); // pula a primeira linha pois já foi validada no metodo `validadorColunas`
             while((linha = reader.readLine()) != null) {
