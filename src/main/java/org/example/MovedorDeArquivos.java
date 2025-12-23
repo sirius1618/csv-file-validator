@@ -10,53 +10,49 @@ import java.util.Scanner;
 
 
 public class MovedorDeArquivos {
-    static final String caminhoDiretorioValido = "/VALIDO";
-    static final String caminhoDiretorioInvalido = "/INVALIDO";
+    static final String caminhoDiretorioValido = "/VALIDADO";
+    static final String caminhoDiretorioInvalido = "/INVALIDADO";
 
     Scanner scanner = new Scanner(System.in);
 
 
     public void moverArquivoValido (String arquivo) throws IOException {
 
-        if (!isSobreescreverArquivo(arquivo)) {
+        if (!sobreescreverArquivo(arquivo)) {
             return;
         }
 
         Path origemArquivo = Paths.get(arquivo);
-        Path destinoArquivo = Paths.get(caminhoDiretorioValido);
+        Path destinoArquivo = Paths.get(caminhoDiretorioValido, origemArquivo.getFileName().toString());
         Files.move(origemArquivo, destinoArquivo, StandardCopyOption.REPLACE_EXISTING);
         System.out.println("Arquivo movido " + arquivo + " Para diretorio: " + caminhoDiretorioValido);
     }
 
     public void moverArquivoInvalido (String arquivo) throws IOException {
 
-        if (!isSobreescreverArquivo(arquivo)) {
+        if (!sobreescreverArquivo(arquivo)) {
             return;
         }
 
         // TODO: passar de forma correta o arquivo par ao diretorio.
         Path origemArquivo = Paths.get(arquivo);
-        Path destinoArquivo = Paths.get(caminhoDiretorioInvalido);
+        Path destinoArquivo = Paths.get(caminhoDiretorioInvalido, origemArquivo.getFileName().toString());
         Files.move(origemArquivo, destinoArquivo, StandardCopyOption.REPLACE_EXISTING);
         System.out.println("Arquivo movido " + arquivo + " Para diretorio: " + caminhoDiretorioInvalido);
     }
 
     public boolean isVerificarExistenciaArquivo(String arquivoValidarExistencia) {
         Path validar = Paths.get(arquivoValidarExistencia);
-
-        if (Files.exists(validar)) {
-                return true;
-            }
-        return false;
+        return Files.exists(validar);
     }
 
-    public boolean isSobreescreverArquivo (String arquivoValidar) {
+    public boolean sobreescreverArquivo (String arquivoValidar) {
         if (!isVerificarExistenciaArquivo(arquivoValidar)) {
             return true;
         }
 
-
         while (true) {
+            System.out.println("Arquivo já existe. Deseja sobrescrever? (s/n)");
             String resposta = scanner.nextLine().trim().toLowerCase();
             switch (resposta) {
                 case "n": return false;
