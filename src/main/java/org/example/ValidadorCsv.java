@@ -10,7 +10,6 @@ import java.util.List;
 
 public class ValidadorCsv{
 
-
     public ValidadorCsv(String caminhoArquivo) throws IOException {
         this.caminhoArquivo = caminhoArquivo;
 
@@ -50,7 +49,7 @@ public class ValidadorCsv{
                 return false;
             }
 
-            String[] cabecalhoCsv = linha.split(",");
+            String[] cabecalhoCsv = linha.split(";");
 
             if (cabecalhoCsv.length != colunas.size()) {
                 System.out.println("Quantidade de colunas menor do que o esperado");
@@ -79,7 +78,7 @@ public class ValidadorCsv{
                     return false;
                 }
 
-                String[] campos = linha.split(",");
+                String[] campos = linha.split(";");
                 if (campos.length != colunas.size()) return false;
 
             }
