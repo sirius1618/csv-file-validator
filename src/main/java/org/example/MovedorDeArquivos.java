@@ -21,11 +21,12 @@ public class MovedorDeArquivos {
         }
 
         Path origemArquivo = Paths.get(arquivo);
+        String nomeArquivo = origemArquivo.getFileName().toString();
         Path dirMover = Paths.get("")
                 .toAbsolutePath()
                 .resolve("diretorios-csv")
-                .resolve("INVALIDADO")
-                .resolve("teste_validado.csv");
+                .resolve("VALIDADO")
+                .resolve("validado_" + nomeArquivo);
         setCaminhoDiretorioValido(dirMover);
 
         Files.move(origemArquivo, getCaminhoDiretorioValido(), StandardCopyOption.REPLACE_EXISTING);
@@ -37,12 +38,12 @@ public class MovedorDeArquivos {
         if (!sobreescreverArquivo(arquivo)) {
             return;
         }
-
         Path origemArquivo = Paths.get(arquivo);
+        String nomeArquivo = origemArquivo.getFileName().toString();
         Path dirMover = Paths.get("").toAbsolutePath()
                         .resolve("diretorios-csv")
-                        .resolve("VALIDADO")
-                        .resolve("teste_invalidado");
+                        .resolve("INVALIDADO")
+                        .resolve("invalidado_" + nomeArquivo );
         setCaminhoDiretorioInvalido(dirMover);
 
         Files.move(origemArquivo, getCaminhoDiretorioInvalido(), StandardCopyOption.REPLACE_EXISTING);
