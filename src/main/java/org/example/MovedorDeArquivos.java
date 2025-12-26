@@ -5,26 +5,30 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Locale;
 import java.util.Scanner;
 
 
 public class MovedorDeArquivos {
-    static final String caminhoDiretorioValido = "/VALIDADO";
-    static final String caminhoDiretorioInvalido = "/INVALIDADO";
+
+    private Path caminhoDiretorioValido;
+    private Path caminhoDiretorioInvalido;
 
     Scanner scanner = new Scanner(System.in);
 
-
     public void moverArquivoValido (String arquivo) throws IOException {
-
         if (!sobreescreverArquivo(arquivo)) {
             return;
         }
 
         Path origemArquivo = Paths.get(arquivo);
-        Path destinoArquivo = Paths.get(caminhoDiretorioValido, origemArquivo.getFileName().toString());
-        Files.move(origemArquivo, destinoArquivo, StandardCopyOption.REPLACE_EXISTING);
+        Path dirMover = Paths.get("")
+                .toAbsolutePath()
+                .resolve("diretorios-csv")
+                .resolve("INVALIDADO")
+                .resolve("teste_validado.csv");
+        setCaminhoDiretorioValido(dirMover);
+
+        Files.move(origemArquivo, getCaminhoDiretorioValido(), StandardCopyOption.REPLACE_EXISTING);
         System.out.println("Arquivo movido " + arquivo + " Para diretorio: " + caminhoDiretorioValido);
     }
 
@@ -34,10 +38,14 @@ public class MovedorDeArquivos {
             return;
         }
 
-        // TODO: passar de forma correta o arquivo par ao diretorio.
         Path origemArquivo = Paths.get(arquivo);
-        Path destinoArquivo = Paths.get(caminhoDiretorioInvalido, origemArquivo.getFileName().toString());
-        Files.move(origemArquivo, destinoArquivo, StandardCopyOption.REPLACE_EXISTING);
+        Path dirMover = Paths.get("").toAbsolutePath()
+                        .resolve("diretorios-csv")
+                        .resolve("VALIDADO")
+                        .resolve("teste_invalidado");
+        setCaminhoDiretorioInvalido(dirMover);
+
+        Files.move(origemArquivo, getCaminhoDiretorioInvalido(), StandardCopyOption.REPLACE_EXISTING);
         System.out.println("Arquivo movido " + arquivo + " Para diretorio: " + caminhoDiretorioInvalido);
     }
 
@@ -62,5 +70,21 @@ public class MovedorDeArquivos {
 
             }
         }
+    }
+
+    public void setCaminhoDiretorioValido(Path caminhoDiretorioValido) {
+        this.caminhoDiretorioValido = caminhoDiretorioValido;
+    }
+
+    public void setCaminhoDiretorioInvalido(Path caminhoDiretorioInvalido) {
+        this.caminhoDiretorioInvalido = caminhoDiretorioInvalido;
+    }
+
+    public Path getCaminhoDiretorioValido() {
+        return caminhoDiretorioValido;
+    }
+
+    public Path getCaminhoDiretorioInvalido() {
+        return caminhoDiretorioInvalido;
     }
 }
