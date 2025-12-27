@@ -19,6 +19,7 @@ public class Main {
                     .forEach(arquivo -> {
                         try {
                             ValidadorCsv validadorCsv =  new ValidadorCsv(arquivo.toString());
+                            validadorCsv.validar();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

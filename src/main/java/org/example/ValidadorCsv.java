@@ -12,15 +12,6 @@ public class ValidadorCsv{
 
     public ValidadorCsv(String caminhoArquivo) throws IOException {
         this.caminhoArquivo = caminhoArquivo;
-
-        boolean colunasValidas = validarColunas(caminhoArquivo);
-        boolean linhasValidadas = validarLinhas(caminhoArquivo);
-
-        if (!colunasValidas || !linhasValidadas) {
-            moverArquivo.moverArquivoInvalido(caminhoArquivo);
-        } else {
-            moverArquivo.moverArquivoValido(caminhoArquivo);
-        }
     }
 
     public static final List<String> colunas = Arrays.asList(
@@ -88,5 +79,17 @@ public class ValidadorCsv{
             return false;
         }
         return true;
+    }
+
+    public void validar() throws IOException {
+
+        boolean colunasValidas = validarColunas(this.caminhoArquivo);
+        boolean linhasValidadas = validarLinhas(this.caminhoArquivo);
+
+        if (!colunasValidas || !linhasValidadas) {
+            moverArquivo.moverArquivoInvalido(this.caminhoArquivo);
+        } else {
+            moverArquivo.moverArquivoValido(this.caminhoArquivo);
+        }
     }
 }
