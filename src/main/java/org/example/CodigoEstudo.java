@@ -1,11 +1,12 @@
 package org.example;
 
-public class CodigoEstudo {
-    import java.io.BufferedReader;
+import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+
+public class CodigoEstudo {
 
     public class ValidadorCSV {
 
@@ -73,5 +74,4 @@ import java.util.List;
             validarCSV(caminho);
         }
     }
-
 }
