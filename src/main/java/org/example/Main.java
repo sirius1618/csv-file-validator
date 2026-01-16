@@ -8,9 +8,11 @@ import java.nio.file.Paths;
 public class Main {
     public static void main(String[] args) {
 
+
         Path dirPendentes = Paths.get("").toAbsolutePath()
-                .resolve("diretorios-csv")
                 .resolve("PENDENTES");
+
+        Util.validarExistenciaDiretorio(dirPendentes);
 
         try  (var arquivos = Files.list(dirPendentes)) {
             arquivos.filter(Files::isRegularFile)
