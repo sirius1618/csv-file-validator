@@ -1,5 +1,6 @@
 package org.example;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,15 +16,20 @@ public class MovedorDeArquivos {
 
     Scanner scanner = new Scanner(System.in);
 
+
     public void moverArquivoValido (String arquivo) throws IOException {
         Path origemArquivo = Paths.get(arquivo);
         String nomeArquivo = origemArquivo.getFileName().toString();
+
         Path dirMover = Paths.get("")
                 .toAbsolutePath()
-                .resolve("diretorios-csv")
                 .resolve("VALIDADO")
                 .resolve(nomeArquivo);
         setCaminhoDiretorioValido(dirMover);
+
+        if (!Files.isDirectory(dirMover)) {
+            dirMover = Files.createDirectories(dirMover);
+        }
 
         if (!sobreescreverArquivo(getCaminhoDiretorioValido().toString())) {
             return;
@@ -38,10 +44,13 @@ public class MovedorDeArquivos {
         Path origemArquivo = Paths.get(arquivo);
         String nomeArquivo = origemArquivo.getFileName().toString();
         Path dirMover = Paths.get("").toAbsolutePath()
-                .resolve("diretorios-csv")
                 .resolve("INVALIDADO")
                 .resolve(nomeArquivo );
         setCaminhoDiretorioInvalido(dirMover);
+
+        if (!Files.isDirectory(dirMover)) {
+            dirMover = Files.createDirectories(dirMover);
+        }
 
         if (!sobreescreverArquivo(getCaminhoDiretorioInvalido().toString())) {
             return;
